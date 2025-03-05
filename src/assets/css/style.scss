@@ -112,6 +112,24 @@ header{
     }
 }
 
+footer{
+    background-color: $tertiary-color;
+    ul{
+        li{
+            margin-bottom: 8px;
+            padding: 0;
+            a{
+                font-size: 1.2em;
+                color:$primary-white;
+                text-decoration: none;
+            }
+        }
+    }
+    .spotlight{
+        border-top: 1px solid rgba($primary-white, 0.2);
+    }
+}
+
 .section-1{
     .swiper{
         .swiper-wrapper{
