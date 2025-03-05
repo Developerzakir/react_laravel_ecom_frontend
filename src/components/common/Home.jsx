@@ -5,10 +5,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import SliderOneImg from '../../assets/images/banner-1.jpg';
 import SliderTwoImg from '../../assets/images/banner-2.jpg';
+import LatestProducts from './LatestProducts';
+
 
 const Home = () => {
   return (
     <>
+      {/* Header section start  */}
       <header className="shadow">
         <div className='bg-dark text-center py-3'>
          <span className='text-white'>Your Fashion Partner</span>
@@ -44,7 +47,9 @@ const Home = () => {
             </Navbar>
         </div>
       </header>
+      {/* Header section end  */}
 
+      {/* Slider section start  */}
       <section className='section-1'>
         <Swiper
           spaceBetween={0}
@@ -66,6 +71,11 @@ const Home = () => {
             </SwiperSlide>                
         </Swiper>
       </section>
+       {/* Slider section end  */}
+
+       {/* New Arrivals section start  */}
+         <LatestProducts />
+       {/* New Arrivals section  end  */}
     </>
   )
 }

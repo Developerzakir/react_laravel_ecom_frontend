@@ -127,3 +127,36 @@ header{
         }
     }
 }
+
+.product{
+    
+    .card-img{
+        overflow: hidden;
+        border-radius: 10px;
+        img{
+            border-radius: 10px;
+            transition: all 0.3s ease-out;
+        }
+    }
+    &:hover{
+        img{
+            scale: 1.2;
+        }
+    }
+
+    .card-body{
+        padding: 0;
+        a{
+            font-size: 1.2em;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .price{
+            font-size: 1.2em;
+            del{
+                color: rgba($primary-black,0.5);
+            }
+        }
+    }
+}
