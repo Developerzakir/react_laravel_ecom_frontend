@@ -6,6 +6,7 @@ import 'swiper/css';
 import SliderOneImg from '../../assets/images/banner-1.jpg';
 import SliderTwoImg from '../../assets/images/banner-2.jpg';
 import LatestProducts from './LatestProducts';
+import FeaturedProducts from './FeaturedProducts';
 
 
 const Home = () => {
@@ -76,6 +77,10 @@ const Home = () => {
        {/* New Arrivals section start  */}
          <LatestProducts />
        {/* New Arrivals section  end  */}
+
+       {/* Featured Products section start  */}
+       <FeaturedProducts />
+       {/* Featured Products section  end  */}
     </>
   )
 }
