@@ -3,12 +3,17 @@ import Layout from '../../common/Layout'
 import Sidebar from '../../common/Sidebar'
 import { Link } from 'react-router-dom'
 import { adminToken, apiUrl } from '../../common/http'
+import Loader from '../../common/Loader'
+import Nostate from '../../common/Nostate'
 
 const Show = () => {
 
-    const [categories,setCategories]= useState([]);
+    const [categories,setCategories] = useState([]);
+    const [loader,setLoader] = useState(false);
 
 const fetchCategories = async ()=>{
+    setLoader(true)
+
     const res = await fetch(`${apiUrl}/categories`,{
         method:"GET",
         headers:{
@@ -18,6 +23,8 @@ const fetchCategories = async ()=>{
         }
     }).then(res=>res.json())
     .then(result=>{
+        setLoader(false)
+
         if(result.status == 200){
             setCategories(result.data);
         }else{
@@ -43,7 +50,17 @@ useEffect(()=>{
                 </div>
                 <div className="col-md-9">
                 <div className="card shadow">
+                   
                     <div className="card-body p-4">
+                        {
+                            loader == true && <Loader />
+                        }
+
+                        {
+                            loader == false && categories.length == 0 && <Nostate text="Categories Not Found" />
+                        }
+
+                        { categories && categories.length > 0 &&
                         <table className="table table-hover">
                             <thead>
                                 <tr>
@@ -56,7 +73,7 @@ useEffect(()=>{
                             <tbody>
 
                                 {
-                                    categories && categories.map(category=>{
+                                     categories.map(category=>{
                                         return (
                                             <tr>
                                             <td>{category.id}</td>
@@ -87,6 +104,7 @@ useEffect(()=>{
                                 
                             </tbody>
                         </table>
+                        }
                     </div>
                 </div>
                 </div>
