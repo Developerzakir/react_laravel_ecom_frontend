@@ -12,6 +12,7 @@ import Dashboard from './components/admin/Dashboard';
 import { AdminRequireAuth } from './components/admin/AdminRequireAuth';
 import { AdminAuthProvider } from "./components/context/AdminAuth"; 
 import {default as ShowCategories} from './components/admin/category/Show';
+import {default as CreateCategories} from './components/admin/category/Create';
 
 
 function App() {
@@ -39,6 +40,11 @@ function App() {
         <Route path="/admin/categories" element={
           <AdminRequireAuth>
              <ShowCategories/>
+          </AdminRequireAuth>
+          } />
+        <Route path="/admin/categories/create" element={
+          <AdminRequireAuth>
+             <CreateCategories/>
           </AdminRequireAuth>
           } />
         
