@@ -7,39 +7,41 @@ import { toast } from 'react-toastify';
 import { adminToken, apiUrl } from '../../common/http';
 
 const Create = () => {
-    const [disable,setDisable] = useState(false)
-    const navigate = useNavigate()
 
-        const {
-            register,
-            handleSubmit,
-            watch,
-            formState: { errors },
-          } = useForm();
+  const [disable,setDisable] = useState(false)
+  const navigate = useNavigate()
 
-          const saveCategory = async (data)=>{
-            setDisable(true);
+      const {
+          register,
+          handleSubmit,
+          watch,
+          formState: { errors },
+        } = useForm();
 
-               const res = await fetch(`${apiUrl}/categories`,{
-                    method:"POST",
-                    headers:{
-                        'Content-type': 'application/json',
-                        'Accept'      : 'application/json',
-                        'Authorization': `Bearer ${adminToken()}`
-                    },
-                    body: JSON.stringify(data)
-                }).then(res=>res.json())
-                .then(result=>{
-                    setDisable(false);
-                
-                    if(result.status == 200){
-                       toast.success(result.message)
-                       navigate("/admin/categories")
-                    }else{
-                        alert('somwthing went wrong');
-                    }
-                })
-          }
+        const saveBrand = async (data)=>{
+          setDisable(true);
+
+             const res = await fetch(`${apiUrl}/brands`,{
+                  method:"POST",
+                  headers:{
+                      'Content-type': 'application/json',
+                      'Accept'      : 'application/json',
+                      'Authorization': `Bearer ${adminToken()}`
+                  },
+                  body: JSON.stringify(data)
+              }).then(res=>res.json())
+              .then(result=>{
+                  setDisable(false);
+              
+                  if(result.status == 200){
+                     toast.success(result.message)
+                     navigate("/admin/brands")
+                  }else{
+                      alert('somwthing went wrong');
+                  }
+              })
+        }
+
 
   return (
     <Layout>
@@ -53,7 +55,7 @@ const Create = () => {
             <Sidebar />
             </div>
             <div className="col-md-9">
-               <form onSubmit={handleSubmit(saveCategory)}>
+               <form onSubmit={handleSubmit(saveBrand)}>
                     <div className="card shadow">
                         <div className="card-body p-4">
                             <div className="mb-3">

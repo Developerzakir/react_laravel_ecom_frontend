@@ -1,59 +1,89 @@
 import React, { useState } from 'react'
 import Layout from '../../common/Layout'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import Sidebar from '../../common/Sidebar'
 import { useForm } from "react-hook-form";
 import { toast } from 'react-toastify';
 import { adminToken, apiUrl } from '../../common/http';
 
-const Create = () => {
-    const [disable,setDisable] = useState(false)
-    const navigate = useNavigate()
+const Edit = () => {
 
-        const {
-            register,
-            handleSubmit,
-            watch,
-            formState: { errors },
-          } = useForm();
+   const [disable,setDisable] = useState(false)
+      const [brand, setBrand] = useState([])
+      const navigate = useNavigate()
+      const params = useParams()
+  
+          const {
+              register,
+              handleSubmit,
+              watch,
+              reset,
+              formState: { errors },
+            } = useForm({
+              defaultValues: async ()=>{
+  
+                  const res = await fetch(`${apiUrl}/brands/${params.id}`,{
+                      method:"GET",
+                      headers:{
+                          'Content-type': 'application/json',
+                          'Accept'      : 'application/json',
+                          'Authorization': `Bearer ${adminToken()}`
+                      },
+                     
+                  }).then(res=>res.json())
+                  .then(result=>{
+                      if(result.status == 200){
+                        setBrand(result.data)
+                         reset({
+                          name: result.data.name,
+                          status: result.data.status
+                         })
+                      }else{
+                          alert('somwthing went wrong');
+                      }
+                  })
+  
+              }
+            });
+  
+            const saveBrand = async (data)=>{
+              setDisable(true);
+  
+                 const res = await fetch(`${apiUrl}/brands/${params.id}`,{
+                      method:"PUT",
+                      headers:{
+                          'Content-type': 'application/json',
+                          'Accept'      : 'application/json',
+                          'Authorization': `Bearer ${adminToken()}`
+                      },
+                      body: JSON.stringify(data)
+                  }).then(res=>res.json())
+                  .then(result=>{
+                      setDisable(false);
+                  
+                      if(result.status == 200){
+                         toast.success(result.message)
+                         navigate("/admin/brands")
+                      }else{
+                          alert('somwthing went wrong');
+                      }
+                  })
+            } 
 
-          const saveCategory = async (data)=>{
-            setDisable(true);
-
-               const res = await fetch(`${apiUrl}/categories`,{
-                    method:"POST",
-                    headers:{
-                        'Content-type': 'application/json',
-                        'Accept'      : 'application/json',
-                        'Authorization': `Bearer ${adminToken()}`
-                    },
-                    body: JSON.stringify(data)
-                }).then(res=>res.json())
-                .then(result=>{
-                    setDisable(false);
-                
-                    if(result.status == 200){
-                       toast.success(result.message)
-                       navigate("/admin/categories")
-                    }else{
-                        alert('somwthing went wrong');
-                    }
-                })
-          }
 
   return (
     <Layout>
     <div className="container">
         <div className="row">
             <div className="d-flex justify-content-between mt-5 pb-3">
-            <h4 className="h4 pb-0 mb-0">Category Create</h4>
-            <Link to="/admin/categories" className='btn btn-primary'>Show</Link>
+            <h4 className="h4 pb-0 mb-0">Brand Update</h4>
+            <Link to="" className='btn btn-primary'>Show</Link>
             </div>
             <div className="col-md-3">
             <Sidebar />
             </div>
             <div className="col-md-9">
-               <form onSubmit={handleSubmit(saveCategory)}>
+            <form onSubmit={handleSubmit(saveBrand)}>
                     <div className="card shadow">
                         <div className="card-body p-4">
                             <div className="mb-3">
@@ -98,7 +128,7 @@ const Create = () => {
                     </div>
                     <button
                     disabled={disable}
-                     className='btn btn-primary mt-3'>Create</button>
+                     className='btn btn-primary mt-3'>Update</button>
                </form>
             </div>
         </div>
@@ -107,4 +137,4 @@ const Create = () => {
   )
 }
 
-export default Create
+export default Edit
