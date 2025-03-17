@@ -43,7 +43,7 @@ const Show = () => {
             <div className="row">
                 <div className="d-flex justify-content-between mt-5 pb-3">
                 <h4 className="h4 pb-0 mb-0">Products</h4>
-                <Link to="" className='btn btn-primary'>Button</Link>
+                <Link to="/admin/products/create" className='btn btn-primary'>Create</Link>
                 </div>
                 <div className="col-md-3">
                 <Sidebar />
@@ -81,7 +81,7 @@ const Show = () => {
                                               <tr>
                                               <td>{product.id}</td>
                                               <td>
-                                                <img src={product.image_url} width={70} alt="" />
+                                                <img src={product.image_url} width={50} alt="" />
                                               </td>
                                               <td>{product.title}</td>
                                               <td>{product.price}</td>
